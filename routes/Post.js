@@ -9,11 +9,6 @@ const {
   deletePost,
 } = require("../controllers/postCtr");
 
-const {
-  requireSignIn,
-  alowedTo,
-  isBlocked,
-} = require("../middlwares/authMiddlwares");
 
 const {
   createPostValidator,
@@ -26,9 +21,6 @@ const {
 // @access Protect
 router.post(
   "/",
-  requireSignIn,
-  alowedTo("admin", "user"),
-  isBlocked,
   createPostValidator,
   createPost
 );
@@ -37,22 +29,18 @@ router.post(
 // @access Protect
 router.put(
   "/:id",
-  requireSignIn,
-  alowedTo("admin", "user"),
   updatePostValidator,
   updatePost
 );
 
 // @desc get all Post
 // @access Protect
-router.get("/", requireSignIn, alowedTo("admin", "user"), allPosts);
+router.get("/", allPosts);
 
 // @desc get a single Post
 // @access Protect
 router.get(
   "/:id",
-  requireSignIn,
-  alowedTo("admin", "user"),
   getPostValidator,
   getPost
 );
@@ -61,8 +49,6 @@ router.get(
 // @access Protect
 router.delete(
   "/:id",
-  requireSignIn,
-  alowedTo("admin", "user"),
   removePostValidator,
   deletePost
 );
